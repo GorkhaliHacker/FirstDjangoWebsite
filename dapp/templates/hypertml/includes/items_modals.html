@@ -1,0 +1,57 @@
+<!For Modal Buy >
+<div class="modal fade" id="Modal-Buy{{ forloop.counter }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Are you Sure About Purchasing {{ allitem.name }}? </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         <h3><i class="fa fa-black-tie" aria-hidden="true">Please Confirm The Purchase Below</i></h3>
+          <h6>{{ allitem.name }} Costs {{ allitem.price }}$</h6>
+          Number of Items In Stock : {{ allitem.stock }}
+      </div>
+      {% if allitem.stock == 0%}
+          <div class="modal-body">
+          <h6><i class=" fa fa-black-tie" aria-hidden="true">Sorry The Stock Has Been Finished! Please Check Other Items</i></h6>
+          <br>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Go Back To Items List</button>
+          </div>
+       {% else %}
+          <div class="modal-footer">
+          {% if user.is_authenticated %}
+            <form class="purchase" method="POST" >
+              {% csrf_token %}
+              <input type="hidden" name="purchased-item" value="{{ allitem.name }}">
+              <button type="submit" class="btn btn-primary" name = "confirm">Confirm</button>
+            </form>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Go Back To Items List</button>
+          {% else %}
+                <a href="{% url 'login' %}" class="fw-bold text-body"><u>Log In To Purchase Items</u></a>
+               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Go Back To Items List</button>
+          {% endif %}
+          </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!For Modal MoreInfo>
+<div class="modal fade" id="Modal-MoreInfo{{ forloop.counter }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">{{ allitem.name }}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          {{ allitem.description }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

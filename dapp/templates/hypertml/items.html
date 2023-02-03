@@ -1,0 +1,50 @@
+{% extends 'hypertml/base.html' %}
+
+{% block title %}
+    Items Page
+{% endblock %}
+<body>
+
+{% block content %}
+    <div>
+    <table class="table">
+        <thead>
+            <tr>
+              <th scope="col">S.N</th>
+              <th scope="col">Item Name</th>
+              <th scope="col">Product Image</th>
+              <th scope="col">Stock Left</th>
+               <th scope="col">Price</th>
+              <th scope="col">Options</th>
+            </tr>
+          </thead>
+        <tbody>
+            {% for allitem in allitems %}
+                {% include 'hypertml/includes/items_modals.html' %}
+                <tr>
+                  <th scope="row">{{ forloop.counter }}</th>
+                  <td>{{ allitem.name }}</td>
+                  <td>
+                      <img alt="image" style="width: 400px" src="{{ allitem.image_url }}">
+                  </td>
+                   <td> {{ allitem.stock }}</td>
+                  <td>{{ allitem.price }}$</td>
+
+                  <td>
+                      <button type="button" class="btn btn-success mx-1 my-1" data-bs-toggle="modal" data-bs-target="#Modal-Buy{{ forloop.counter }}" >
+                           Buy
+                      </button>
+                      <button type="button" class="btn btn-dark mx-1 my-1" data-bs-toggle="modal" data-bs-target="#Modal-MoreInfo{{ forloop.counter }}">
+                          More Info
+
+                      </button>
+                  </td>
+                </tr>
+
+            {% endfor %}
+          </tbody>
+    </table>
+    </div>
+
+{% endblock %}
+</body>
